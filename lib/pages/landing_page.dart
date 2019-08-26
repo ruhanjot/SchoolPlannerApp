@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:learning_app/utils/constants.dart';
+import '../utils/constants.dart';
 import '../UI/agenda_list.dart';
 
 //import '../utils/constants.dart';

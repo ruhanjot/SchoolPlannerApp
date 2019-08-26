@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learning_app/utils/constants.dart';
+import './utils/constants.dart';
 
 import './pages/landing_page.dart';
 

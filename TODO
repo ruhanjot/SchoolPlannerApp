@@ -1,0 +1,2 @@
+- undo items which are dismissed in agena
+- Convert data maps into JSON everytime they are modified

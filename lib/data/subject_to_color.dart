@@ -1,5 +1,6 @@
 import 'dart:core';
 import 'package:flutter/material.dart';
+import 'package:school_planner/utils/constants.dart';
 
 Map<String, Color> subjectToColor = {
   "physics": Colors.blueAccent,
@@ -10,5 +11,5 @@ Map<String, Color> subjectToColor = {
   "social studies": Colors.brown,
   "english": Colors.indigo,
   "french": Colors.purple,
-  "other": Colors.grey[350]
+  "other": mainWhite
 };

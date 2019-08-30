@@ -6,38 +6,37 @@ import '../utils/constants.dart';
 import '../data/agenda_list_info.dart';
 import '../data/subject_to_color.dart';
 
-class AgendaList extends StatefulWidget {
+class ImportantAgendaList extends StatefulWidget {
   @override
-  _AgendaListState createState() => _AgendaListState();
+  _ImportantAgendaListState createState() => _ImportantAgendaListState();
 }
 
-class _AgendaListState extends State<AgendaList> {
-  _AgendaListState();
+class _ImportantAgendaListState extends State<ImportantAgendaList> {
+  _ImportantAgendaListState();
 
   Map _listInfo = agendaListInfo;
   final Map<String, Color> _subjectToColor = subjectToColor;
-  Color _dismissedRed =  mainBlack;//Color(0x88F44336);
+  Color _dismissedRed = mainBlack; //Color(0x88F44336);
 
-  Dismissible _buildTile(int index, Map listInfo, Map subjectColors) {
-    final _currentAgendaItem = listInfo["items"][index];
+  Dismissible _buildTile(int index, List listInfo, Map subjectColors) {
+    final _currentAgendaItem = listInfo[index];
     return Dismissible(
         key: Key(UniqueKey().toString()),
         onDismissed: (direction) {
           setState(() {
-            listInfo["items"].remove(_currentAgendaItem);
+            _listInfo["items"].remove(_currentAgendaItem);
           });
           Scaffold.of(context).showSnackBar(SnackBar(
               backgroundColor: _dismissedRed,
-              content: Text(_currentAgendaItem["title"] + " has been deleted.")));
+              content:
+                  Text(_currentAgendaItem["title"] + " has been deleted.")));
         },
         background: Container(color: _dismissedRed),
         child: ListTile(
           leading: Row(
             mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 20),
                 width: 3,
                 color: _currentAgendaItem["itemType"] == 'work' ? mainWhite : mainBlack,
               ),
@@ -70,11 +69,11 @@ class _AgendaListState extends State<AgendaList> {
                 });
               }),
           onTap: () => {print("Tapped")},
-          contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+          contentPadding: EdgeInsets.all(10),
         ));
   }
 
-  Widget _buildRow(int i, Map listInfo, Map subjectColors) {
+  Widget _buildRow(int i, List listInfo, Map subjectColors) {
     if (i.isOdd) {
       return Container(
           child: Divider(
@@ -88,9 +87,9 @@ class _AgendaListState extends State<AgendaList> {
     return _buildTile(index, listInfo, subjectColors);
   }
 
-  Widget _buildAgenda(Map listInfo, Map subjectColors) {
+  Widget _buildAgenda(List listInfo, Map subjectColors) {
     List<Widget> _listChildren = [];
-    int itemLength = listInfo["items"].length;
+    int itemLength = listInfo.length;
     if (itemLength > 0) {
       for (int i = 0; i < 2 * itemLength - 1; i++) {
         _listChildren.add(_buildRow(i, listInfo, subjectColors));
@@ -103,6 +102,12 @@ class _AgendaListState extends State<AgendaList> {
 
   @override
   Widget build(BuildContext context) {
-    return _buildAgenda(_listInfo, _subjectToColor);
+    List importantItemsInfo = [];
+    for (var item in _listInfo["items"]) {
+      if (item["isImportant"]) {
+        importantItemsInfo.add(item);
+      }
+    }
+    return _buildAgenda(importantItemsInfo, _subjectToColor);
   }
 }

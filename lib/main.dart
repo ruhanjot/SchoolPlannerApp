@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import './utils/constants.dart';
 
-import './pages/landing_page.dart';
+import './pages/agenda_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         primaryColor: mainBlack,
         backgroundColor: accentGrey,
       ),
-      home: LandingPage()
+      home: AgendaPage()
     );
   }
 }
